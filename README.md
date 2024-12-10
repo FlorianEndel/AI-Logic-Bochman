@@ -4,7 +4,9 @@
 **Author: Florian Endel
 
 This repository contains materials from a seminar presentation and paper examining Alexander Bochman's formal theory of causal reasoning, presented at the "Seminar Logics in AI" (Winter 2024/25) at the Artificial Intelligence Group (AGI), University of Hagen, Germany.
-Overview
+
+
+## Overview
 
 The work explores Bochman's approach to causal reasoning, which provides a formal framework that:
 
