@@ -1,0 +1,851 @@
+%%% Choose between 16:9 and 4:3 format by commenting out/uncommenting one of the following lines:
+%\documentclass[aspectratio=169]{beamer} % 16:9
+\documentclass{beamer} % 4:3
+
+
+
+%=========================================================================================================================
+
+\usepackage{beamerthemesplit}
+\usepackage{appendixnumberbeamer} % do not count appendix for total page number
+\usepackage[english]{babel}
+%\usepackage[utf8]{inputenc}
+
+\usepackage{hyperref}
+\usepackage{xurl}
+
+
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{tabularx}
+
+\useinnertheme{aig}
+\useoutertheme{aig}
+\usecolortheme{aig}
+\usefonttheme{aig}
+
+%% fonts
+\usepackage{fontspec}
+\setmainfont{Crimson}
+
+
+%%% notes
+%\setbeameroption{hide notes} % Only slides
+%\setbeameroption{show only notes} % Only notes
+\setbeameroption{show notes on second screen=right} % Both
+
+
+%% Table of Contents      
+\AtBeginSection[]{
+	\begingroup 
+		%\setbeamertemplate{headline}{} 
+		%\setbeamertemplate{footline}{} 
+		\addtobeamertemplate{frametitle}{\vspace*{0\baselineskip}}{}
+		
+		\begin{frame}<beamer> 
+			\frametitle{Table of Contents} 
+			\tableofcontents[currentsection,currentsubsection] 
+			%\addtocounter{framenumber}{-1}
+		\end{frame}
+	\endgroup
+} 
+ 
+%% Table of Content: Repeat at beginning of subsection      
+% \AtBeginSubsection[]{
+% 	\begingroup 
+% 		\setbeamertemplate{headline}{} 
+% 		\setbeamertemplate{footline}{} 
+% 		\addtobeamertemplate{frametitle}{\vspace*{0\baselineskip}}{}
+% 		
+% 		\begin{frame}<beamer> 
+% 			\frametitle{Inhalt} 
+% 			\tableofcontents[currentsection,currentsubsection] 
+% 			\addtocounter{framenumber}{-1}
+% 		\end{frame}
+% 	\endgroup
+% } 
+ 
+
+
+%% References
+\usepackage{csquotes}
+\usepackage[
+    backend=biber,
+    style=ieee, %
+    natbib=true,
+    style=numeric,
+    sorting=none,
+    url=false,
+    citecounter=true,
+    citetracker=true,
+    maxcitenames=1
+] {biblatex} % authoryear-icomp
+\addbibresource{references.bib}
+
+% Font size in list of references 
+\renewcommand*{\bibfont}{\scriptsize}
+
+
+%% citation in footnotes
+\let\svthefootnote\thefootnote
+
+% https://tex.stackexchange.com/a/29931/38244
+\DeclareCiteCommand{\footcite}
+{\usebibmacro{prenote}}%
+{%  
+    \ifciteseen{}{%
+        \usebibmacro{citeindex}%
+        \let\thefootnote\relax%
+        \footnotetext{%
+            \mkbibbrackets{\usebibmacro{cite}}%
+            \setunit{\addnbspace}
+            \printnames{labelname}%
+            \setunit{\labelnamepunct}
+            \printfield[citetitle]{title}%
+            \newunit%
+            \printfield[]{year}%
+        }%
+        \let\thefootnote\svthefootnote%
+    }%
+    \autocite{\thefield{entrykey}}%
+  }
+{\addsemicolon\space}
+%{\usebibmacro{postnote}}
+
+%% customcite
+\newcommand{\customcite}[1]{\cite{#1} \citeauthor{#1}. \citetitle{#1}. \citeyear{#1}}
+\newcommand{\customciteNoAuthor}[1]{\cite{#1} \citetitle{#1}. \citeyear{#1}}
+
+%% hypersetup
+% Fit page automatically in PDF Viewer
+\hypersetup{pdfstartview={Fit}}
+\hypersetup{pdfinfo={
+	Title=Causal Reasoning by Alexander Bochman,
+	Author=Florian Endel,
+	Subject=Seminar in AI
+        %CreationDate={D:20241105170000},
+        %ModDate={D:20241112170000},
+	}
+}
+
+
+%=========================================================================================================================
+\title{Causal Reasoning by Alexander Bochman}
+
+\author[F. Endel]{Florian Endel}
+\institute{Artificial Intelligence Group,\\
+University of Hagen, Germany}
+\date{December 10, 2024}
+%=========================================================================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\hidelogo}{\logo{}}
+\newcommand{\showlogo}
+{
+    \logo{\includegraphics[width=3cm]{figures/logoaig.png}}
+}
+\hidelogo
+
+%=========================================================================================================================
+
+\begin{document}
+
+%=========================================================================================================================
+
+{
+    \setbeamertemplate{footline}{}
+    \showlogo
+    \begin{frame}
+      \titlepage
+    \end{frame}
+}
+
+
+\section{Introduction \& Background}
+
+\begin{frame}{History: Overview of Bochman's Work on Causality}
+    \note{
+        \begin{itemize}
+            \item historical context
+            \item 2021: book - fundamental explanations, detailed introduction 
+            \item no references before about 2000
+            \item explored various aspects of causal reasoning over years (summarised in book)
+            \item most recent work 2024 with a concise and fundamental approach 
+            \item no co-authors 
+        \end{itemize}
+    }
+
+    Relevant for my presentation: 
+    \par
+    \begin{itemize}
+        \item \customciteNoAuthor{bochman_logical_2021}
+        \item \textbf{\customciteNoAuthor{bochman_causal_2024}}
+    \end{itemize}
+    
+    Early work: 
+    \par
+    \begin{itemize}        
+        \item \customciteNoAuthor{bochman_logic_2003}
+        \item \customciteNoAuthor{bochman_causal_2004}
+    \end{itemize}
+    
+    Exploring various aspects: 
+    \par
+    \begin{itemize}    
+        \item \customciteNoAuthor{bochman_actual_2018}
+        \item \customciteNoAuthor{bochman_default_2023}
+        \item \customciteNoAuthor{bochman_inferential_2023}
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Relevance of causality} 
+    \note{
+        \begin{itemize}
+            \item (impression of) causality is relevant in daily lives \& science
+            \item [1] Kahneman: humans tend to interpret their observations in causal terms / cause and effect
+            \item [2] Pearl: causal inference from observations $\neq$ experiments
+            \begin{itemize}
+                \item Structural Causal Model uses structural equation modeling
+                \item Pearl "The Book of Why: The New Science of Cause and Effect" (2018), 'do-calculus, counterfactuals'
+                \item \textbf{Causal inference} process of determining independent, actual effect of a particular phenomenon that is a component of a larger system. %The main difference between causal inference and inference of association is that causal inference analyzes the response of an effect variable when a cause of the effect variable is changed
+                \item \textbf{Causal reasoning} is the process of identifying causality: the relationship between a cause and its effect. 
+            \end{itemize}
+            \item [3] show, that hints about causation (and derived recommendations) are common in literature; "causation" is not mentioned directly
+        \end{itemize}
+    }
+    \begin{itemize}
+        \item "The \highlight{interpretation of probability as propensity} leads people to base their judgments of likelihood primarily on \highlight{causal considerations}, and to ignore information that does not have causal significance."\footcite{kahneman_thinking_2013}
+        \item "The possibility to \highlight{learn causal relationships from raw data} has been on philosophers' dream list since the time of Hume (1711-1776)" \footcite{pearl_causality_2000}
+        \item "\highlight{causal intent}, inference, implications, and recommendations — \highlight{is common}" (in the observational  health literature) \footcite{haber_causal_2022}
+    \end{itemize}
+    \vspace{1em}
+    ... but \yellowhighlight{how to formalize causality in formal logic}?
+\end{frame}
+
+\section{Logical Formal Theory of Causal Reasoning}
+
+\begin{frame}{Bochman's approach} %[allowframebreaks]
+    \note{
+        \begin{itemize}
+            \item concepts: causation, proposition, acceptance
+            \item phil. terminology: rationality, normativity, reasons, explanations
+            \item principles and constructions: inherently normative character 
+            \item normative: expressing value judgments / not stating facts
+            %\vspace{1em}
+            %\item introduction references Hilberts formalisation of geometry
+            %\item parable of the blind men and the elephant
+            \item flexible exploration
+            \vspace{1em}
+            \item Semantics based on \highlight{causal principle of acceptance for propositions}
+            \item Causal theory describes "why" certain propositions should be accepted through causal rules.
+            \item Rational semantics only show which propositions should be accepted but don't explain the original "why."
+            \item \textbf{Distinction}: cannot reconstruct the full causal origins of accepted propositions from their semantics alone
+        \end{itemize}
+    }
+    \begin{itemize}
+        %\item ... as a formal basis for a general theory of causal reasoning\footcite{bochman_causal_2024}
+        \item Causation is multifaceted: no formalization of concepts 
+        \item Approach: "investigate important variants of causal reasoning"\footcite{bochman_causal_2024}
+        \item Definition of systems of reasoning: 
+        \begin{itemize}
+            \item \yellowhighlight{Language} consists of set of \highlight{(causal) inference rules} defined on a set of \highlight{propositions}
+            \item \yellowhighlight{Semantics}: valuations of propositions (with causal rules)
+            \item \yellowhighlight{Causal Inference}: formal derivations preserving \highlight{rational semantics}
+        \end{itemize}
+        \item Distinction: \highlight{rational semantics} vs. \highlight{causal theory}
+        \item Inherently nonmonotonic
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Causal Calculus} %[allowframebreaks]
+    \note{
+        \begin{itemize}
+            \item 2021: two chapters about causal calculus: 
+            \begin{itemize}
+                \item "classic" Geffner 92, McCain and Turner 97, Lifschitz 97, Pearl 
+                \item The causal calculus can be seen as a most natural and immediate generalization of classical logic that allows for causal reasoning.
+            \end{itemize}
+            \item Knowledge can be stored as cause - effect relationships
+        \end{itemize}
+    }
+    \begin{itemize}
+        \item ... general logical formalism of \yellowhighlight{causal reasoning}\footcite{bochman_actual_2018}
+        \item 2 layers: nonmonotonic semantics + logics of causal rules \footcite{bochman_causal_2004}
+    \end{itemize}
+
+    \begin{block}{Causal Language}
+        \begin{itemize}
+            \item Built on top of classical logic
+            \item Language: set of causal rules
+            \item Underlying language $L$: set of proposition
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Basics: classical propositional language \cite[79]{bochman_logical_2021}}
+        \begin{itemize}
+            \item $\land, \lor, \neg, \to, t, f$: classical connectives \& constants
+            \item Th ($\vdash$): Syntactic \textit{provability}, based on formal proof rules.
+            \item $\vDash$: Semantic \textit{entailment}, based on truth in all models.
+            \item \textit{p,g,r} finite sets of propositions; \textit{A, B, C} classical propositions
+        \end{itemize}
+    \end{block}
+\end{frame}
+%\framebreak
+
+
+
+\begin{frame}{Causal Theories and their Semantics}
+    \note{
+        \begin{itemize}
+            \item causal theory \( \Delta \): arbitrary set of causal rules with constraints on \emph{acceptance} of propositions
+            \item Causal Acceptance Principle: A proposition capital B is accepted with respect to a causal theory delta, iff a set of propositions (lowercase) a causes B; where all propositions in a are accepted
+            \item Preservation Principle: inference rules "transmit" acceptance
+            \item Leibniz’ Principle of Sufficient Reason: normative,  propositions require reasons for their acceptance
+        \end{itemize}
+    }
+    \begin{block}{Causal rule}
+        \begin{itemize}
+            \item Causal binary relation / causal rule: \yellowhighlight{$a \Rightarrow B$}: \textit{a causes B}
+            \item Causal theory \( \Delta \): arbitrary set of causal rules 
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Principles of Acceptance}
+        \begin{itemize}
+            \item Causal Acceptance Principle: $B$ is \emph{accepted} \emph{iff} $a \Rightarrow B$, where all $A$ in $a$ are accepted
+            \item \textbf{Preservation} Principle: If all propositions in $a$ are accepted, and $a$ causes $B$, then $B$ should be accepted.
+            \item Principle of \textbf{Sufficient Reason}: Any proposition should have a cause for its acceptance.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
+
+\begin{frame}{Rational Semantics}
+    \note{
+        \begin{itemize}
+            \item  For any set $u$ of propositions and a causal theory $\Delta$: $\Delta(u)$ the set of all propositions B that are directly caused by $u$ in $\Delta$
+            \item $\Delta(u)$ monotonic operator; $\subseteq$ = subset
+            %\item viewing valuation v itself as a set of (accepted) propositions
+            \item causal model: determines that a proposition is accepted in a model if and only if it has a cause in this model.
+            \item Fixed Point: applying the operator $\Delta$ to u doesn't change the set: $\Delta(u)=u$
+            \item any causal theory has at least one causal model 
+            \item Causal Models: defined as a fixed point of the operator $\Delta(u)$.
+            \item least model: iteratively applied, starting with empty set $\varnothing$
+            \item Rational Semantics: full set of causal models (not just the least model) that satisfy $\Delta$. These models provide a range of valid interpretations of the theory.
+        \end{itemize}
+    }
+    \begin{block}{Valuation on propositions for describing semantics}
+        \begin{itemize}
+            \item function $v \in \{0, 1\}^L$
+            \item $v(A) = 1$: proposition $A$ is accepted (‘taken-true’) 
+            \item $v(A) = 0$: \yellowhighlight{non-acceptance is not rejection of A}
+            \item rejection: $v(\neg A) = 1$
+            \item $\Delta(u) = \{ B \mid a \Rightarrow B \in \Delta, \, a \subseteq u \}$
+        \end{itemize}
+    \end{block}
+    \begin{itemize}
+        \item \yellowhighlight{Causal model}: fixed point of (accepted) propositions $v = \Delta(v)$
+        \item Least model $\Delta()$: smallest model
+        \begin{itemize}
+            \item $u_0 = \emptyset, \quad u_1 = \Delta(u_0), \quad u_2 = \Delta(u_1), \,\dots$
+        \end{itemize}        
+        \item \yellowhighlight{Rational Semantics}: set of all causal models of a theory
+    \end{itemize}
+    
+    
+\end{frame}
+
+
+\begin{frame}{Example}
+    \note{
+        \begin{itemize}
+            \item if \emph{Rained} is accepted (with respect to such a causal theory)
+            \item both \emph{Grasswet} and \emph{Streetwet} should be accepted
+            \vspace{1em}
+            \item any acceptable set of propositions that contains \emph{Grasswet} should either contain \emph{Rained} or \emph{Sprinkler} as its causes
+            \vspace{1em}
+            \item defications from causes to their effects and from effects to their possible causes are essential parts of causal reasoning
+        \end{itemize}
+    }
+
+    \begin{exampleblock}{Causal theory}
+        \[
+        \text{Rained} \Rightarrow \text{Grasswet}
+        \]
+    
+        \[
+        \text{Sprinkler} \Rightarrow \text{Grasswet}
+        \]
+        
+        \[
+        \text{Rained} \Rightarrow \text{Streetwet}
+        \]
+    \end{exampleblock}
+
+\end{frame}
+
+
+\begin{frame}{Causal Inference}
+    \note{
+        \begin{itemize}
+            \item "If a rule a causes A holds and a is extended to a larger set b, the rule still holds."
+            \item "If a causes A and the combined set of a,A casuse B, then a casues B can be inferred by combining these rules."
+            \item Reflexivity postulate: first postulate of Tarski consequence
+            \item Reflexivity would make propositions self-justified (self-evident)
+            \item one of the key differences between causal inference and deductive consequence
+            \item  ‘omission’ creates the possibility of causal reasoning
+            \item a causally implies B under the causal theory $\Delta$
+            \item The definition of $\Rightarrow_\Delta$ is not about a single, specific causal rule, but rather about a generalized statement capturing all causal relationships derivable from the causal theory $\Delta$
+        \end{itemize}
+    }
+    Formal derivations "\emph{metainferences}" among causal rules that always preserve the rational semantics:
+    
+    \begin{itemize}
+        \item \textbf{Monotonicity:} $\text{If } a \Rightarrow A \text{ and } a \subseteq b, \text{ then } b \Rightarrow A. $
+        \item \textbf{Cut:} $\quad \text{If } a \Rightarrow A \text{ and } a, A \Rightarrow B, \text{ then } a \Rightarrow B$.
+    \end{itemize}
+    
+    \begin{alertblock}{Reflexivity and Causal assumptions} 
+        \begin{itemize}
+            \item $A \Rightarrow A$ does \textbf{not} hold by default
+            \item $A \Rightarrow A$ is a self-evident proposition that does not require further justification for its acceptance
+        \end{itemize}
+    \end{alertblock}    
+    \begin{itemize}
+        \item \textbf{$\Rightarrow_\Delta$}: all causal rules that are derivable from $\Delta$; $a \Rightarrow_\Delta B$
+        \item Any causal theory $\Delta$ is semantically equivalent to $\Rightarrow_\Delta$
+        
+    \end{itemize}
+    
+    
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]{Causal Operator $\mathcal{C}$ }
+    \begin{itemize}
+        \item $\mathcal{C}(u)$ is the set of propositions ($A$) that are caused by a set $u$:  $\mathcal{C}(u) = \{ A \mid u \Rightarrow A \}$
+        %\item Every proposition $A$ in $\mathcal{C}(u)$ is a causal (and not "only" logical) consequence of $u$. 
+        \item Similar to the derivability operator $Th(u)$ %: set of all propositions that can be formally derived from $u$ (i.e., syntactically provable propositions)
+        \item \yellowhighlight{\textit{Monotonicity}}: adding more propositions to the set $u$, the set of consequences $\mathcal{C}(u)$ only grows or stays the same – it cannot shrink.
+        \begin{itemize}
+            \item $\text{If } u \subseteq v, \text{ then } \mathcal{C}(u) \subseteq \mathcal{C}(v)$
+        \end{itemize}
+        \item \yellowhighlight{\textit{Deductive Closure}}: $\mathcal{C}(u)$ always results in a \emph{deductively closed set}: all logical consequences of the elements in $\mathcal{C}(u)$ are also included in $\mathcal{C}(u)$
+        \begin{itemize}
+            \item $\mathcal{C}(u) = Th(\mathcal{C}(u))$
+            \item e.g.: if the rain ($u$) causes the street to be wet ($\mathcal{C}(u)$), it also causes the logical consequences $Th(\mathcal{C}(u))$ (e.g., a slippery street)
+        \end{itemize}
+        \item \yellowhighlight{Transitivity}: if $A \Rightarrow B$ and $B \Rightarrow C$, then $A \Rightarrow C$
+    \end{itemize}
+
+\framebreak
+
+    \begin{block}{Non-inclusivity of $\mathcal{C}$}
+        $u$ is not necessarily a subset of $\mathcal{C}(u)$: $u \nsubseteq \mathcal{C}(u)$
+    \end{block}
+    \begin{itemize}
+        \item set of propositions that are \highlight{caused} by $u$ (i.e., $\mathcal{C}(u)$) do not always contain $u$ itself
+        \item just because a proposition is in $u$ it must \highlight{not} appear in the set of consequences caused by $u$
+        \item Non-inclusivity related to (non-) reflexivity
+        \item Contrast to derivability operator $\text{Th}$: original set is always included in the set of derivable propositions
+    \end{itemize}
+    \begin{exampleblock}{Example: $\mathcal{C}(\text{rain})$}
+        a specific raining event ($u$) has a causal consequences ($\mathcal{C}(u)$, e.g. a wet street), but does not necessarily cause itself (but perhaps other raining events $u'$)
+    \end{exampleblock}
+    
+\framebreak
+
+    \begin{block}{Non-idempotence of $\mathcal{C}$}
+        \begin{itemize}
+            \item $\mathcal{C}(\mathcal{C}(u)) \neq \mathcal{C}(u)$    
+            \item a set of propositions that are caused by $u$ ($\mathcal{C}(u)$) might cause another set of propositions $\mathcal{C}(\mathcal{C}(u))$
+            \item causation propagates across several steps (cascading effects)
+        \end{itemize}
+    \end{block}
+    \begin{exampleblock}{Example: $u = \{\text{rain}\}$}
+        \begin{itemize}
+            \item 1. Step: Direct causal effects of $u$: $\mathcal{C}(u)=\{\text{wet street}\}$
+            \begin{itemize}
+                \item causes logical consequences $Th(\mathcal{C}(u))$ directly: slippery street
+            \end{itemize}
+            \item 2. Step: Effects of $\mathcal{C}(u)=\{\text{slippery street}\}$: 
+            \begin{itemize}
+                \item $\mathcal{C}(\mathcal{C}(u)) = \{\text{people slip on the street}, \text{traffic slows down}\}$
+            \end{itemize}
+            \item 3. Step: Effects of $\mathcal{C}(\mathcal{C}(u))$: 
+            \begin{itemize}
+                \item $\mathcal{C}(\mathcal{C}(\mathcal{C}(u))) = \{\text{people get hurt}, \text{cloth get wet}\}$
+            \end{itemize}
+        \end{itemize}
+    \end{exampleblock}
+
+\end{frame}
+
+\begin{frame}{Causal Theories and Expanded Notions}
+
+    \begin{itemize}
+        \item A \textbf{causal theory} is a set of causal rules (conditionals) that define the causal behavior within a certain framework.
+        
+        \item $ \mathcal{C}_{\Delta} $: For any causal theory $ \Delta $, there is a least production relation, that includes all causal rules derivable from $ \Delta $.
+
+    \end{itemize}
+
+\bigskip
+    \begin{exampleblock}{}
+    If theory $ \Delta $ states:
+    $$
+    \{A \Rightarrow B, B \Rightarrow C\},
+    $$
+    then for a premise set $ u = \{A\} $, one can systematically derive
+    $$
+    \mathcal{C}_{\Delta}(u) = \{B, C\},
+    $$
+    representing both intermediate and direct effects triggered by $ A $.
+        
+    \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Causal Inference (\( \Rightarrow \)) vs. Deductive Consequence (\( \vdash_\Rightarrow \))}
+    \note{
+        \begin{itemize}
+            \item \textbf{Causal Inference (\( \Rightarrow \))}: Refers to reasoning based on \emph{cause-and-effect} relationships defined by a causal theory.            
+            \item \textbf{Deductive logic}: the propositional theory tells everything about the consequence relation (rules + results).
+            \item Causal inference relation $\Rightarrow$ has the same propositional theories as the corresponding consequence relation \( \vdash_\Rightarrow \)
+        \end{itemize}
+    }
+
+    \begin{itemize}
+        \item \textbf{\( \Rightarrow \)}: reasoning based on \emph{cause-and-effect} relationships
+        \item \textbf{\( \vdash_\Rightarrow \)}: propositional theory about the consequence relation (rules + results).
+        \item $\Rightarrow$ has the same propositional theories as \( \vdash_\Rightarrow \)
+        \item \textbf{But}: causal reasoning retains extra causal information beyond what is encoded in the propositional theories.
+    \end{itemize}
+
+    \begin{exampleblock}{Example}
+        \begin{itemize}
+            \item $Rained \Rightarrow Grasswet$, $Sprinkler \Rightarrow Grasswet$ lead to $Grasswet$
+            \item \textbf{But} the \yellowhighlight{specific causal mechanisms} (rain vs. sprinkler) are \yellowhighlight{part of the causal model}, not captured in the resulting propositional theory.
+        \end{itemize}            
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Equivalence}
+    \note{
+        \begin{itemize}
+            \item  Two causal theories are logically equivalent, if each can be obtained from the other using the postulates of causal inference
+            \item Reverse: rational semantics does not fully determine the content of the original causal theory.
+            \item develops a notion of \emph{strong semantic qeuivalency}
+            \item Example: single model $\emptyset$, no props. accepted        
+        \end{itemize}
+    }
+
+    \begin{itemize} 
+        \item Logically equivalent $\Delta$ are semantically equivalent
+        \item Reverse does not hold!
+    \end{itemize}
+    \begin{exampleblock}{}
+        \begin{itemize}
+            \item Two theories: $$\Delta = \{A \Rightarrow B\}, \Phi = \{A \Rightarrow C\}$$
+            \item different, determine same rational semantics $\Delta() = \Phi() = \emptyset$
+            \item add causal rule $A \Rightarrow A$ to both 
+            \item $\Delta() = \{A, B\}, \quad \Phi()=\{A,C\}$
+        \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Axioms vs. Assumptions}
+    \note{
+        \begin{itemize}
+            \item Law of causality (Leibniz): any accepted proposition should have an accepted cause
+            \item A proposition \( A \) will be called an \textbf{axiom} of a causal theory \( \Delta \) if the rule \( \emptyset \Rightarrow A \) belongs to \( \Delta \);
+            \item axioms do not require justification, must be accepted in any model
+            \item A proposition \( A \) will be called a \textbf{causal assumption} of a causal theory if the rule \( A \Rightarrow A \) belongs to it.  
+            \item self-evident propositions, can be incorporated into a causal model when cosistent
+            \item any axiom will also be an assumption, though not vice versa
+            \item As a result, causal theories admit in general multiple causal models depending on the assumptions we actually accept
+            \item abductive reasoning: Bochman 2007
+        \end{itemize}
+    }
+
+    \begin{itemize} 
+        \item \textbf{Axiom}: \( \emptyset \Rightarrow A \) 
+        \item \textbf{Causal Assumption}: \( A \Rightarrow A \) 
+        \item (Relationship to abductive reasoning \cite{bochman_logical_2021})
+\end{itemize}
+    \begin{exampleblock}{Original Example: Rained, Sprinkler, Streetwet}
+        \begin{itemize}
+            \item  by itself, this causal theory has a single empty causal model $\emptyset$
+            \item add assumptions: $Rained \Rightarrow Rained \quad Sprinkler \Rightarrow Sprinkler$
+            \item Rational semantics of this causal theory: three causal models
+            \item $\{Rained, Grasswet, Streetwet\}$, $\{Sprinkler, Grasswet\}$, $\{Rained, Sprinkler, Grasswet, Streetwet\}$
+        \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Supraclassical Causal Reasoning}
+    \note{
+        \begin{itemize}
+            \item  ancient principle ex nihilo nihil fit (‘Nothing comes from nothing”)
+            \item  ex falso quodlibet (“from falsehood, anything”)
+        \end{itemize}
+    }
+
+    \begin{itemize} 
+        \item Aim: integrating causal reasoning into a more comprehensive reasoning system
+        \item \textbf{Classical entailment} (formal logical reasoning): integral part of the causal system
+        \item Supraclassical: extends and includes classical entailment, to naturally incorporate classical logic
+        %\item But: no way of expressing the usual truth-tables
+        \item "Causal reasoning is \highlight{not a replacement or competitor} of logical (deductive) reasoning, but its complement (or extension)" \cite{bochman_logical_2021}
+    \end{itemize}
+    \begin{itemize}
+        \item \textit{(Strengthening)} If $A \mathhighlight{\vDash} B$ and $B \Rightarrow C$, then $A \Rightarrow C$;
+        \item \textit{(Weakening)} If $A \Rightarrow B$ and $B \mathhighlight{\vDash} C$, then $A \Rightarrow C$;
+        \item \textit{(And)} If $A \Rightarrow B$ and $A \Rightarrow C$, then $A \Rightarrow (B \land C)$;
+        \item \textit{(Truth and Falsity)} $t \Rightarrow t$; $\darkmathhighlight{f \Rightarrow f}$.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Further Properties of Causal Reasoning}
+    \note{
+        \begin{itemize}
+            \item Defaults in Causal Reasoning: special kind of assumptions, must accept unless there is reason not to (not rejected $\neg A$)
+            \item nonmonotonic formalisms, adding auxiliary ‘presumptions’ to an inference rule such that only their refutation could lead to cancellation of the rule
+            \item SEM: cause-and-effect recipes 
+            \item new truths into the causal framework can invalidate earlier conclusions about causation.
+            \item When \textbf{negation} is viewed as default, negative propositions are exempted from the \textbf{need of causal explanation}; in other words, they do not need causes for their acceptance. 
+        \end{itemize}
+    }
+
+    \begin{itemize} 
+        \item \textbf{Default causal theory}: pair $(\Delta, \mathcal{D})$, $\mathcal{D}$ a subset of causal assumptions
+        \item \textbf{Nonmonotonicity}
+        \begin{itemize}
+            \item Context-Sensitive Causal Reasoning
+            \item Causal acceptance is directional
+        \end{itemize}
+        \item \textbf{Structural Equation Models}: representation in the causal calculus
+        \item Counterfactual Equivalence: related to SEM
+        \item Negative Causal Completion: negation as default ($ \neg p \Rightarrow \neg p$)
+    \end{itemize}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+
+
+
+
+\section{Closing remarks}
+\begin{frame}{Applications of Causal Reasoning}
+    \begin{itemize}
+        \item Explainable AI \footcite{bochman_causal_2024}
+        \item Causal attribution (actual causality) in legal theory \footcite{bochman_actual_2018}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Take away messages}
+    \note{
+        \begin{itemize}
+            \item It serves as a natural basis for integrating Pearl’s approach to causation while also accommodating classical entailment within causal reasoning.
+            \item A critical feature is the \textbf{asymmetry}: while the language determines its semantics, the reverse (semantics determining the language) is not true. This challenges conventional representational approaches.
+            \item ties back to historical views on causation from Aristotle, Leibniz, and Hume
+            \item It formalizes meaning through \textbf{rules of inference} (causal relationships). It provides a philosophical basis for understanding asymmetrical relationships in causal reasoning systems.
+            \item \textbf{holistic approach} in his theory, where propositions make sense primarily in relation to the broader web of inferences rather than in isolation.
+        \end{itemize}
+    }
+    Bochman's causal reasoning...
+    \begin{itemize}
+        \item Unified approach: integrate Pearl's approach to causation, classical entailment within causal reasoning
+        \item Nonmonotonic reasoning
+        \item Asymmetry in Semantics
+        \item Roots in Historical Reasoning
+        \item Connection to Inferentialism (rule-based vs. representational)
+    \end{itemize}
+\end{frame}
+
+
+
+%%-------------------------------------------------------------------------------------------------------------
+
+%\logo{\includegraphics[width=3cm]{figures/logoaig.png}}
+{
+    \setbeamertemplate{footline}{}
+    \showlogo
+    \begin{frame}
+      \titlepage
+    \end{frame}
+}
+\nologo
+
+
+%%-------------------------------------------------------------------------------------------------------------
+
+\appendix
+\section{Appendix}
+\subsection{Bibliography}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{References}
+    {\footnotesize
+        \printbibliography
+    }
+\end{frame}
+
+
+\section{Spare Slides}
+
+\begin{frame}{History: Other relevant authors and papers}
+    Some of the most influential authors:
+    \vspace{1em}
+    \begin{itemize}
+        \item \customcite{pearl_embracing_1988}
+        \item \customcite{pearl_causality_2000}
+        \item \customcite{lifschitz_logic_1997}
+    \end{itemize}
+    %\framebreak 
+    \begin{itemize}
+        \item \customcite{geffner_causal_1990}
+        \item \customcite{turner_logic_1999}
+        \item \customcite{dash_causal_2012}
+    \end{itemize}
+    \vspace{1em}
+    ... and many others
+\end{frame}
+
+
+
+\subsection{Classical propositional language}
+
+% 1: Syntactic Provability
+\begin{frame}{Syntactic Provability (\( \vdash \))}
+    \textbf{Definition:}  
+    \( Th \) (\( \vdash \)) represents \highlight{syntactic provability}, meaning a proposition $A$ can be formally derived using axioms and formal inference rules.  
+    Provability is about whether a proposition $A$ can be formally derived from a set of axioms or premises \( \Gamma \) using a given set of syntactic proof rules within a formal system.
+
+    \textbf{Key Idea:} 
+    \begin{itemize}
+        \item A proposition $A$ is provable (written as $Th \vdash A$ if there is a formal proof sequence for $A$.
+        \item Relies entirely on the structure and rules of a formal system (e.g., axioms, inference rules like Modus Ponens).
+        \item Does not involve interpretations or models; it’s purely rule-based reasoning.
+        \item Following strict rules to deduce a conclusion.
+
+    \end{itemize}                 
+
+\end{frame}
+
+% 2: Semantic Entailment
+\begin{frame}{Semantic Entailment (\( \vDash \))}
+    \textbf{Definition:}  
+    \( \vDash \) represents \highlight{semantic entailment}, meaning a proposition $A$ is true in any model where the assumptions \( \Gamma \) hold.  Entailment is about whether $A$ is true in every possible model (interpretation) where a set of premises Γ is true.
+
+    
+    \textbf{Key Idea:} 
+    \begin{itemize}
+        \item Determines logical consequence based on truth in all models, not formal derivation.
+        \item Like checking universal truths: something is true in all possible worlds where the premises hold.
+        \item Depends on truth values assigned to propositions in all models of the logic.
+        Assesses whether a logical proposition holds in a model-theoretic sense.    
+    \end{itemize}  
+
+\end{frame}
+
+% 3: Propositional Atoms
+\begin{frame}{Propositional Atoms (\( p, g, r \))}
+    \textbf{Definition:}  
+    Propositional atoms are the smallest, indivisible units of logic, representing atomic facts.  
+
+    \textbf{Example:}
+    \[
+        p = \text{"It is raining"}, \quad g = \text{"The grass is wet"}, \quad r = \text{"It is windy"}.
+    \]
+    No further breakdown is possible for these logical units.
+\end{frame}
+
+% 4: Classical Propositions
+\begin{frame}{Classical Propositions (\( A, B, C \))}
+    \textbf{Definition:}  
+    Classical propositions are statements formed by combining propositional atoms with logical connectives (\( \land, \lor, \lnot, \rightarrow \)) or truth constants (\( t, f \)).  
+
+    \textbf{Example:}
+    \[
+        A = p \land g, \quad B = p \lor \lnot r, \quad C = \lnot g \rightarrow r.
+    \]
+    These statements are more complex and their truth values depend on logical interpretation.
+\end{frame}
+
+% Summary
+\begin{frame}{Summary}
+    \begin{itemize}
+        \item Syntactic Provability (\( \vdash \)): Formal derivation based on rules.  
+        \item Semantic Entailment (\( \vDash \)): Truth across all models.
+        \item Propositional Atoms: Indivisible units (\( p, g, r \)).  
+        \item Classical Propositions: Composite logical statements (\( A, B, C \)).  
+    \end{itemize}
+
+    \vspace{0.5cm}
+    These concepts bridge syntactic and semantic aspects of logic, fundamental to understanding relationships in formal reasoning systems.
+\end{frame}
+
+% Examples
+\begin{frame}{Examples}
+    \begin{itemize}
+        \item \textbf{Provability}: $ Th \vdash Grasswet $ \par
+        Derive \textit{Grasswet} syntactically using axioms like $ Rained \rightarrow Grasswet $.
+        
+        \item \textbf{Entailment}:  $ Rained \vDash Grasswet $ \par
+        \textit{Grasswet} is true in every model where \( Rained \) is true.
+        
+        \item \textbf{Propositional Atoms}:
+        \( Rained \), \( Grasswet \), and \( Streetwet \) are indivisible facts used to construct more complex statements.
+        
+        \item \textbf{Classical Proposition}: $ Rained \rightarrow (Streetwet \lor Grasswet) $ \par
+        A composite logical statement describing causal or correlative relationships.
+    \end{itemize}
+\end{frame}
+
+
+
+\section{Example slides}
+
+\begin{frame}{Highlighting Text}
+    We can \highlight{highlight} text. There are also a \darkhighlight{darker} option, and a \yellowhighlight{yellow} option.\\
+    The same options are also available in math mode: $\mathhighlight{a} + \darkmathhighlight{b} = \yellowmathhighlight{c}$
+\end{frame}
+
+\begin{frame}{Blocks}
+    \begin{block}{Block}
+        This is a regular block.
+        \begin{itemize}
+            \item This is an item in a block.
+        \end{itemize}
+    \end{block}
+    
+    \begin{alertblock}{Block}
+        This is an alert block.
+        \begin{itemize}
+            \item This is an item in an alert block.
+        \end{itemize}
+    \end{alertblock}
+    
+    \begin{exampleblock}{Block}
+        This is an example block.
+        \begin{itemize}
+            \item This is an item in an example block.
+        \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+
+\end{document}
