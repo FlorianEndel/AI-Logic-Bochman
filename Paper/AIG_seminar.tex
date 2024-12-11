@@ -1,5 +1,13 @@
-\documentclass[seminar,palatino]{AIGpaper}
+\documentclass[seminar,palatino,english]{AIGpaper}
 % Please read the README.md file for additional information on the parameters and overall usage of AIGpaper
+
+\usepackage[english]{babel}
+\usepackage[utf8]{luainputenc}
+
+%% fonts
+\usepackage{fontspec}
+\setmainfont{Crimson}
+
 
 %%%% Package Imports %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx}					    % enhanced support for graphics
@@ -18,21 +26,56 @@
     args/.style={circle, minimum size=0.9cm,draw=black, thick,fill=white},
 }
 
+\usepackage{xurl}
+
+%% References
+\usepackage{csquotes}
+\usepackage[
+    backend=biber,
+    style=ieee, %
+    natbib=true,
+    style=numeric,
+    sorting=none,
+    url=false,
+    citecounter=true,
+    citetracker=true,
+    maxcitenames=1
+] {biblatex} % authoryear-icomp
+\addbibresource{references.bib}
+
+
 
 %%%% Author and Title Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\author{Erika Mustermann}
+\title{Causal Reasoning by Alexander Bochman}
 
-\title{Die Verbreitung des Begriffes \glqq{}Mustermann\grqq{} im Zusammenhang mit Beispieltexten}
+\author{Florian Endel}
 
+%% hypersetup
+\usepackage[
+    bookmarks=true,
+    bookmarksnumbered=true,
+    bookmarksopen=true,
+    bookmarksopenlevel=2, 
+    breaklinks=true,
+    pdfborder={0 0 0},
+    pdfborderstyle={},
+    backref=false,
+    colorlinks=true
+] {hyperref}
+\hypersetup{
+    pdftitle={Causal Reasoning by Alexander Bochman},
+    pdfauthor={Florian Endel},
+    pdfsubject={Seminar in AI}
+}
 
 %%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\germanabstract{
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-}
+% \germanabstract{
+% Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+% }
 
 % use this if the document is written in english
-%\englishabstract{}
+\englishabstract{}
 
 
 \begin{document}
@@ -49,7 +92,7 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
 
 
 \section{Example Figures and Tables}
-Figure \ref{fig:af} shows an example of an abstract argumentation framework \cite{dung1995acceptability}.
+Figure \ref{fig:af} shows an example of an abstract argumentation framework \cite{bochman_causal_2024}.
 
 \begin{figure}[ht]
     \centering
@@ -88,7 +131,10 @@ Städte, Länder, Flüsse
 
 
 % References
-\addreferences
+%\addreferences
+{\footnotesize
+    \printbibliography
+}
 
 \makestatement{1}
 
