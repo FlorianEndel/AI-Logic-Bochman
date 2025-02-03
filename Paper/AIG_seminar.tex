@@ -2,7 +2,7 @@
 % Please read the README.md file for additional information on the parameters and overall usage of AIGpaper
 
 \usepackage[english]{babel}
-\usepackage[utf8]{luainputenc}
+%\usepackage[utf8]{luainputenc}
 
 %% fonts
 \usepackage{fontspec}
@@ -27,6 +27,22 @@
 }
 
 \usepackage{xurl}
+
+%%%% from the beamer template
+% Color definitions:
+\definecolor{aigyellow}{RGB}{210,149,81}
+\definecolor{aigblue}{RGB}{0,76,151}
+\definecolor{examplegreen}{RGB}{30,161,6}
+
+
+% Some highlighting options:
+\newcommand{\highlight}[1]{\colorbox{aigblue!10}{#1}}
+\newcommand{\mathhighlight}[1]{\colorbox{aigblue!10}{$\displaystyle #1$}}
+\newcommand{\darkhighlight}[1]{\colorbox{aigblue!20}{#1}}
+\newcommand{\darkmathhighlight}[1]{\colorbox{aigblue!20}{$\displaystyle #1$}}
+\newcommand{\yellowhighlight}[1]{\colorbox{aigyellow!30}{#1}}
+\newcommand{\yellowmathhighlight}[1]{\colorbox{aigyellow!30}{$\displaystyle #1$}}
+
 
 %% References
 \usepackage{csquotes}
@@ -75,7 +91,7 @@
 % }
 
 % use this if the document is written in english
-\englishabstract{}
+\englishabstract{This report summarizes Alexander Bochman's theory of causal reasoning, as presented in his works, particularly focusing on his 2024 publication \cite{bochman_causal_2024} and book \cite{bochman_logical_2021}. It explores the fundamental principles of his causal calculus, its connections to classical logic, structural equation models, and default reasoning, and the important distinction between rational semantics and the causal theory itself. This theory aims at a general principle-based framework for causal reasoning with practical implications for AI and other scientific disciplines.}
 
 
 \begin{document}
@@ -83,51 +99,158 @@
 \maketitle % prints title and author information, as well as the abstract 
 
 
-% ===================== Beginning of the actual text section =====================
+\section{Introduction and Background}
+\subsection{Bochman's Work on Causality}
+\begin{itemize}
+    \item Culmination: 2021 book \cite{bochman_logical_2021}
+    \item Solo work on various causal aspects
+    \item Recent concise approach/summary \cite{bochman_causal_2024}
+\end{itemize}
+\subsection{Relevance of Causality}
+\begin{itemize}
+    \item Crucial in daily life and science
+    \item Kahneman: human causal interpretation
+    \item Pearl: causal inference challenges
+\end{itemize}
 
-\section{Lorem Ipsum}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
+\section{Logical Formal Theory of Causal Reasoning}
+\subsection{Bochman's Approach}
+\begin{itemize}
+    \item No formalizing causation directly
+    \item Normative causal acceptance
+    \item Semantics vs. full theory
+\end{itemize}
 
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   
+\subsection{Causal Calculus}
+\begin{itemize}
+    \item Formalism for causal reasoning
+        \item Semantics and logic layers
+    \item Expands classical logic
+\end{itemize}
 
+\subsection{Causal Theories and their Semantics}
+\begin{itemize}
+    \item Theory \(\Delta\): causal rules
+    \item Causal Acceptance Principle
+    \item Sufficient Reason Principle
+\end{itemize}
+\subsubsection{Causal rules}
+\begin{itemize}
+    \item Causal relation: $a \Rightarrow B$
+    \item Theory \(\Delta\): set of rules
+\end{itemize}
+\subsubsection{Principles of Acceptance}
+\begin{itemize}
+        \item  $B$ accepted iff caused by $a$
+    \item  Cause implies effect accepted
+    \item  Every prop. needs a cause
+\end{itemize}
 
-\section{Example Figures and Tables}
-Figure \ref{fig:af} shows an example of an abstract argumentation framework \cite{bochman_causal_2024}.
+\subsection{Rational Semantics}
+\begin{itemize}
+\item \(\Delta(u)\): direct causal effects
+    \item Fixed point: $v = \Delta(v)$
+    \item Semantics: set of causal models
+\end{itemize}
 
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}[node distance=1cm]
-    	\node[args](args1){a};
-    	\node[args, below=of args1](args2){b};
-    	\node[args, right=of args1](args3){c};
-    	\node[args, right=of args2](args4){d};
-    
-        \path(args3) edge [->] (args1);
-        \path(args3) edge [->, bend right] (args4);
-        \path(args4) edge [->, bend right] (args3);
-    	\path(args4) edge [->] (args2);
-    \end{tikzpicture}
-    \caption{An abstract argumentation framework.}
-    \label{fig:af}
-\end{figure}
+\subsection{Example}
+\begin{itemize}
+    \item \emph{Rained} causes \emph{Grasswet}, \emph{Streetwet}
+    \item \emph{Sprinkler} causes \emph{Grasswet}
+    \item Cause to effect and vice-versa reasoning
+\end{itemize}
 
+\subsection{Causal Inference}
+\begin{itemize}
+    \item Derivations for semantics
+    \item Monotonicity, Cut
+    \item No reflexivity
+\end{itemize}
+\begin{itemize}
+    \item Core rules:
+    \begin{itemize}
+        \item Monotonicity
+        \item Cut
+    \end{itemize}
+\end{itemize}
 
-\begin{table*}[ht]
-\begin{center}
-\begin{tabular}{lll}
-\hline
-1&2&3\\
-4&5&6\\
-\hline
-\end{tabular}
-\end{center}
-\caption{Table caption.} \label{tab:t1}
-\end{table*}
+\subsection{Causal Operator \texorpdfstring{$\mathcal{C}$}{C}}
+\begin{itemize}
+    \item \(\mathcal{C}(u)\): props. caused by \(u\)
+    \item Similar to derivability Th
+    \item Monotonicity, transitivity
+\end{itemize}
 
+\subsubsection{Non-inclusivity of \texorpdfstring{$\mathcal{C}$}{C}}
+\begin{itemize}
+    \item \(u\) not part of \(\mathcal{C}(u)\)
+    \item Differs from Th
+    \item Rain causes wet street not itself
+\end{itemize}
 
+\subsubsection{Non-idempotence of \texorpdfstring{$\mathcal{C}$}{C}}
+\begin{itemize}
+    \item  \(\mathcal{C}(\mathcal{C}(u)) \neq \mathcal{C}(u)\)
+    \item Causation propagates
+   \item Rain example shows cascading effects
+\end{itemize}
 
-\subsection{Encoding Test}
-Städte, Länder, Flüsse
+\subsection{Causal Theories and Expanded Notions}
+\begin{itemize}
+    \item Theories: sets of rules
+    \item Least production relation
+    \item Systematical derivation for effects
+\end{itemize}
+
+\subsection{Causal Inference \texorpdfstring{(\( \Rightarrow \))}{} vs. Deductive Consequence \texorpdfstring{(\( \vdash_\Rightarrow \))}{}}
+\begin{itemize}
+    \item  \(\Rightarrow\): cause-effect
+    \item \(\vdash_\Rightarrow\): propositional theory
+    \item \(\Rightarrow\) retains causal info
+\end{itemize}
+
+\subsection{Equivalence}
+\begin{itemize}
+    \item Logical equivalence via causal inference
+    \item Semantics don't determine theory
+     \item Strong semantic equivalence
+\end{itemize}
+
+\subsection{Axioms vs. Assumptions}
+\begin{itemize}
+     \item Axiom: \(\emptyset \Rightarrow A\)
+    \item Assumption: \(A \Rightarrow A\)
+    \item Assumptions create models
+\end{itemize}
+
+\subsection{Supraclassical Causal Reasoning}
+\begin{itemize}
+    \item Integrates classical logic
+    \item Causal extension
+    \item Falsity rule(s)
+\end{itemize}
+
+\subsection{Further Properties of Causal Reasoning}
+\begin{itemize}
+     \item Defaults: special assumptions
+    \item New truths can invalidate results
+    \item Negation as default
+\end{itemize}
+
+\section{Closing remarks}
+\subsection{Applications of Causal Reasoning}
+\begin{itemize}
+    \item Explainable AI
+    \item Legal theory
+\end{itemize}
+
+\subsection{Take away messages}
+\begin{itemize}
+    \item Basis for integrating Pearl
+    \item Asymmetry between language/semantics
+    \item Holistic view of propositions
+\end{itemize}
+
 
 
 % References

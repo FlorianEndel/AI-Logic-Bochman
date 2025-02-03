@@ -106,7 +106,7 @@
 \fi
 
 \RequirePackage[english,ngerman]{babel}		    % English and new German spelling
-\RequirePackage[utf8]{inputenc}                 % Correct input encoding
+\RequirePackage[utf8]{luainputenc}                 % Correct input encoding
 \RequirePackage[T1]{fontenc}                    % Correct output encoding
 \RequirePackage{titling}                        % For title page creation
 \RequirePackage{ifoddpage}                      % For clearing double pages dynamically(?)
