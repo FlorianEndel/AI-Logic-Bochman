@@ -43,6 +43,10 @@
 \newcommand{\yellowhighlight}[1]{\colorbox{aigyellow!30}{#1}}
 \newcommand{\yellowmathhighlight}[1]{\colorbox{aigyellow!30}{$\displaystyle #1$}}
 
+\usepackage{tcolorbox}
+
+% for longer notes
+\newcommand{\ignore}[1]{}
 
 %% References
 \usepackage{csquotes}
@@ -91,169 +95,532 @@
 % }
 
 % use this if the document is written in english
-\englishabstract{This report summarizes Alexander Bochman's theory of causal reasoning, as presented in his works, particularly focusing on his 2024 publication \cite{bochman_causal_2024} and book \cite{bochman_logical_2021}. It explores the fundamental principles of his causal calculus, its connections to classical logic, structural equation models, and default reasoning, and the important distinction between rational semantics and the causal theory itself. This theory aims at a general principle-based framework for causal reasoning with practical implications for AI and other scientific disciplines.}
+\englishabstract{This report summarizes Alexander Bochman's theory of causal reasoning, as presented in his works, particularly focusing on his 2024 publication \cite{bochman_causal_2024} and book from 2021 \cite{bochman_logical_2021}. It explores the motivations, assumptions, and fundamental principles of his causal calculus, highlighting its connections to classical logic, default reasoning, and the distinction between rational semantics and the causal theory itself. A main objective is to provide a simplified explanation of this complex theory, accompanied by illustrative examples.}
 
 
 \begin{document}
 
 \maketitle % prints title and author information, as well as the abstract 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction and Background}
+
+Causal reasoning is a key part of Artificial Intelligence (AI). It helps systems not just see patterns but also understand what causes what. Causal inference techniques enhance the capability of AI systems to predict outcomes and navigate uncertain environments effectively. \cite{kosaraju_causal_2024} discusses how these models empower AI to go beyond \glqq{}simple\grqq{} pattern recognition, which is typical in traditional machine learning (ML) approaches, by enabling systems to contemplate and reason about interventions to forecast results more accurately based on causal relationships. 
+
+Traditionally, experts like Judea Pearl have used models based on probabilities and graphs to describe and asses these cause-and-effect relationships. Alexander Bochman builds upon these developments and suggested a different and assumably, more comprehensive approach.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Bochman's Work on Causality}
-\begin{itemize}
-    \item Culmination: 2021 book \cite{bochman_logical_2021}
-    \item Solo work on various causal aspects
-    \item Recent concise approach/summary \cite{bochman_causal_2024}
-\end{itemize}
-\subsection{Relevance of Causality}
-\begin{itemize}
-    \item Crucial in daily life and science
-    \item Kahneman: human causal interpretation
-    \item Pearl: causal inference challenges
-\end{itemize}
 
-\section{Logical Formal Theory of Causal Reasoning}
-\subsection{Bochman's Approach}
-\begin{itemize}
-    \item No formalizing causation directly
-    \item Normative causal acceptance
-    \item Semantics vs. full theory
-\end{itemize}
-
-\subsection{Causal Calculus}
-\begin{itemize}
-    \item Formalism for causal reasoning
-        \item Semantics and logic layers
-    \item Expands classical logic
-\end{itemize}
-
-\subsection{Causal Theories and their Semantics}
-\begin{itemize}
-    \item Theory \(\Delta\): causal rules
-    \item Causal Acceptance Principle
-    \item Sufficient Reason Principle
-\end{itemize}
-\subsubsection{Causal rules}
-\begin{itemize}
-    \item Causal relation: $a \Rightarrow B$
-    \item Theory \(\Delta\): set of rules
-\end{itemize}
-\subsubsection{Principles of Acceptance}
-\begin{itemize}
-        \item  $B$ accepted iff caused by $a$
-    \item  Cause implies effect accepted
-    \item  Every prop. needs a cause
-\end{itemize}
-
-\subsection{Rational Semantics}
-\begin{itemize}
-\item \(\Delta(u)\): direct causal effects
-    \item Fixed point: $v = \Delta(v)$
-    \item Semantics: set of causal models
-\end{itemize}
-
-\subsection{Example}
-\begin{itemize}
-    \item \emph{Rained} causes \emph{Grasswet}, \emph{Streetwet}
-    \item \emph{Sprinkler} causes \emph{Grasswet}
-    \item Cause to effect and vice-versa reasoning
-\end{itemize}
-
-\subsection{Causal Inference}
-\begin{itemize}
-    \item Derivations for semantics
-    \item Monotonicity, Cut
-    \item No reflexivity
-\end{itemize}
-\begin{itemize}
-    \item Core rules:
+\ignore{
     \begin{itemize}
-        \item Monotonicity
-        \item Cut
+        \item Culmination: 2021 book.
+        \item Solo work on various causal aspects.
+        \item Recent concise approach (2024).
+    \end{itemize}
+    \begin{itemize}
+        \item Bochman's research spans several years, with a notable culmination in his 2021 book which provided fundamental explanations.
+        \item Most of his cited works start around the year 2000, with a noticeable absence of earlier work, yet he presents a rich body of results in his book.
+        \item His most recent work \cite{bochman_causal_2024} presents a concise and fundamental approach to causal reasoning.
+        \item His work is usually solo, with no co-authors; the main research focus is to bring together different aspects of causal reasoning (summarised in his 2021 book \cite{bochman_logical_2021}).
+        \item This analysis primarily draws on \cite{bochman_logical_2021} and particularly \cite{bochman_causal_2024}.
+        \item Earlier works such as \cite{bochman_logic_2003} and \cite{bochman_causal_2004} explore specific aspects of nonmonotonic causal logic.
+        \item He also explored various aspects of causal reasoning such as actual causality \cite{bochman_actual_2018}, defaults \cite{bochman_default_2023}, and inferentialism \cite{bochman_inferential_2023}.
+    \end{itemize}
+}
+
+Alexander Bochman has worked on causal reasoning for many years, with most of his research appearing after the year 2000. His 2021 book, \emph{A Logical Theory of Causality} \cite{bochman_logical_2021}, introduces many foundational concepts and offers a thorough and detailed presentation of his approach. He aims to provide a unified perspective on logic and reasoning under uncertainty in connection with considerations of causal theory, while providing a very broad and thorough theoretical and historical foundation. Most of the ideas in this book have already been explored in earlier, peer-reviewed research papers, but the book brings everything together in a structured, yet extensively detailed way.
+
+Interestingly, Bochman seems to mostly work independently on his theories of causal reasoning, and has published his papers (about caual reasoning) regularly and exclusively without co-authors. His papers cover different aspects of causal reasoning, always with a strong focus on formal logical foundations. His most recent contribution \cite{bochman_causal_2024} provides a concise and fundamental approach to causal reasoning, streamlining many of his previous ideas into a more compact and accessible framework. Compared to the 2021 book, this newer work is shorter and more focused on the core principles.
+
+Before publishing his book, Bochman worked on several specific areas of causality. Some of his earlier papers, such as \cite{bochman_logic_2003} and \cite{bochman_causal_2004}, lay the groundwork for his later ideas. These papers focus on nonmonotonic causal logic, exploring how causal relationships can be represented in a logical system that allows for \glqq{}defeasible reasoning\grqq{}\cite{bochman_causal_2024}, where conclusions can change when new information becomes available.
+
+His later research extends to several specific aspects of causal reasoning. For example, his 2018 paper \cite{bochman_actual_2018} investigates the notion of \glqq{}actual causality\grqq{}, addressing the formal conditions under which one event can be said to have \glqq{}actually\grqq{} caused another event. Another direction of his work explores the interaction between causal reasoning and default reasoning, which describe how typical or expected causal relationships can be captured without defining each situation individually. In his 2023 paper \cite{bochman_default_2023} Bochman examines these causal defaults and shows how they are embedded in his theory of causal reasoning. Additionally, in \cite{bochman_inferential_2023} he examines how the association between his causal theory and its determined \emph{rational semantics} interact concerning inference, meaning that he explores how causal reasoning fits to rational principles and how conclusions can be drawn within this framework. 
+
+In summary, Bochman, a philosopher by trade, takes a systematic and formal approach to causality, focusing on its logical foundations and links to nonmonotonic reasoning. His background is evident in the broad foundation and rich historical context he provides, especially in his book. The main sources for this discussion are Bochman’s 2021 book \cite{bochman_logical_2021} and his 2024 work \cite{bochman_causal_2024}, which offer the clearest and most organized presentation of his contributions to the field.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Relevance of Causality}
+\ignore{
+    \begin{itemize}
+        \item Crucial in daily life and science.
+        \item Kahneman: human causal interpretation.
+        \item Pearl: causal inference challenges.
+    \end{itemize}
+    \begin{itemize}
+        \item Bochman's research spans several years, with a notable culmination in his 2021 book which provided fundamental explanations.
+        \item Most of his cited works start around the year 2000, with a noticeable absence of earlier work, yet he presents a rich body of results in his book.
+        \item His most recent work \cite{bochman_causal_2024} presents a concise and fundamental approach to causal reasoning.
+        \item His work is usually solo, with no co-authors; the main research focus is to bring together different aspects of causal reasoning (summarised in his 2021 book \cite{bochman_logical_2021}).
+        \item This analysis primarily draws on \cite{bochman_logical_2021} and particularly \cite{bochman_causal_2024}.
+        \item Earlier works such as \cite{bochman_logic_2003} and \cite{bochman_causal_2004} explore specific aspects of nonmonotonic causal logic.
+        \item He also explored various aspects of causal reasoning such as actual causality \cite{bochman_actual_2018}, defaults \cite{bochman_default_2023}, and inferentialism \cite{bochman_inferential_2023}.
+    \end{itemize}
+}
+
+Causality plays a crucial role in both daily life and scientific research. Humans instinctively interpret and explain their observations of events by identifying, anticipating or assuming causes and effects. This natural tendency to seek causal explanations has been widely studied in psychology and cognitive science. Daniel Kahneman, who won the Nobel Memorial Prize in Economic Sciences in 2002 observed that humans interpret many of their observations in causal terms, even in cases where causality might not actually exist \cite{kahneman_thinking_2013, kahneman_noise_2021}\footnote{Interestingly, Judea Pearl, who pioneered causal analysis and is referenced throughout Alexander Bochman's works on causal reasoning, held Daniel Kahneman in high regard and cited his work as a source of inspiration, as also reflected in his \href{https://jewishjournal.com/judaism/obituaries/369905/a-tribute-to-daniel-kahneman-israeli-born-psychologist-who-won-the-nobel-prize-in-economics-2002-for-asking-are-humans-rational/}{obituary}.}. When people witness events, they often assume an underlying cause, even when only a statistical correlation or even no connection a all is present. This strong inclination toward cause-and-effect reasoning influences decision-making processes in multiple domains, such as medicine, economics, and everyday problem-solving.
+
+In scientific research, especially in fields such as social sciences, medicine, and AI, distinguishing correlation from causation is a major challenge. Judea Pearl \cite{pearl_causality_2000,pearl_book_2018} emphasizes the difference between merely observing statistical relationships and actually inferring causal relationships. He argues that causal inference requires more than just analyzing data. Moreover, it involves understanding structural dependencies, conducting experiments, and applying specialized mathematical tools, which he depicts in his \emph{Ladder of Causation}. Pearl developed the \emph{Structural Causal Model}, which relies on structural equation modeling, do-calculus, and counterfactual reasoning to formally establish causal relationships and which is referenced in Alexander Bochman's work.
+
+In \cite{bochman_logical_2021}, Bochman argues that there are different ways to define and approach causality. \textbf{Causal inference} refers to the process of determining the actual, independent effect of a particular phenomenon within a larger system. On the other side, \textbf{causal reasoning} is the broader cognitive process of identifying and interpreting the connection between a cause and its effect. While causal inference typically involves formal methods and structured analysis, causal reasoning is something people engage in intuitively in their daily lives and is the main aim of his work. As a result, he seems to imply that his approach is more comprehensive (\emph{holistic}) in comparison to Pearl's approach to causality.
+
+Even in academic research, hints of causation frequently appear in various forms of peer-reviewed publications, even when the term \glqq{}causation\grqq{} is not explicitly mentioned. For example, Haber et al. \cite{haber_causal_2022} point out that many studies in observational health sciences contain causal intent and implicit causal implications. While authors do not directly write about causation, they seem to use a wide variety of vocabulary to transport the impression of causal coherence. Haber et al. mention, that recommendations based on causal reasoning are implied in some papers, which supports the suspicion, that it is intended to actually report causation. Summarizing, despite not explicitly addressing causality methodologically and explicitly, authors as well as readers might interpret the reported outcomes as if causation has been observed and proven. This highlights the challenge of clearly formalizing causality, in particular when dealing with observational data rather than controlled experiments.
+
+Bochman argues, that defining causality within formal logic remains a difficult task despite it obvious importance. Although Pearl’s structural equation models and other approaches provide first tools to describe and handle causation, there is still \textbf{no generally accepted} way to \textbf{integrate causality into formal logical systems}. This challenge becomes even greater when handling complex reasoning processes in AI, where \emph{understanding} causality is essential \cite{bochman_default_2023}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Methods: Formal Logical Theory of Causal Reasoning}
+
+In this chapter, Bochman’s formal logical theory of causal reasoning is presented, mainly based on \cite{bochman_logical_2021, bochman_causal_2024}. His approach provides a structured framework for representing and understanding causality using formal logic. Unlike probabilistic models of causation, Bochman’s framework focuses on \emph{explicit causal dependencies and logical inference}. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Bochman's Approach}
+
+In his book \cite{bochman_logical_2021}, he discuses many foundational aspects of his formal logic and causal reasoning in general. In contrast, he deliberately omits this kind of formalization, acknowledging \glqq{}Causation is a notoriously elusive and multifaceted notion\grqq{} \cite{bochman_causal_2024}.
+
+Therefore, his approach to causal reasoning does not start by defining causation in a strict way. Instead, his method is more about setting up rules for reasoning about causation rather than trying to define what causation is.
+
+One key idea in this work from 2024 is \textbf{normative causal acceptance}. This means that instead of building causality from observed data or probabilities, he suggests that we understand and determine causality based on rational principles. In this way, his approach is more flexible, allowing different philosophical perspectives on causation to fit within his framework.
+
+He explicitly mentions Hilbert’s approach to geometry, where rather than defining basic objects like points and lines directly, the system is built on postulates and rules they must follow. Similarly, Bochman argues that causation, propositions, and acceptance do not need strict initial definitions, but are understood through the logical rules they must satisfy.
+
+Bochman strictly distinguishes between causal theory and its semantics. His causal theory explains why certain propositions are accepted based on causal relationships, while rational semantics simply describe which propositions should be accepted without necessarily explaining their causal origins. (More details about this interaction are discussed in his work from 2023 about the inferential aspects of causal reasoning \cite{bochman_inferential_2023}, going back to philosophical basics established by Aristoteles, Leibniz and Anscombe.) He argues, taht semantics alone cannot recover the full reasoning behind how we arrived at certain accepted causal statementsk, which also alows his framework to be nonmonotonic. 
+
+
+\ignore{
+    \begin{itemize}
+        \item No formalizing causation directly.
+        \item Normative causal acceptance.
+        \item Semantics vs. full theory.
+    \end{itemize}
+    
+    \begin{itemize}
+        \item Bochman's approach abstains from formalizing concepts like causation, proposition, and acceptance, in favor of investigating variants of causal reasoning.
+       \item He introduces philosophical terminology like rationality, normativity, reasons, and explanations.
+        \item The principle of causal acceptance is seen as inherently normative.
+        \item  His approach builds upon Hilbert's formalization of geometry, focusing on postulates and their consequences.
+        \item Semantics are grounded in a causal principle of acceptance for propositions.
+        \item Causal theory explains why propositions are accepted through causal rules.
+         \item Rational semantics simply indicate which propositions should be accepted, but without the original explanation of the causal theory.
+        \item A core distinction is that semantics alone cannot reconstruct the full causal origins of accepted propositions; the full content of the theory lies beyond mere semantics.
+       \item This approach introduces an inherently nonmonotonic framework.
+    \end{itemize}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Causal Calculus}
+
+
+\ignore{
+    \begin{itemize}
+        \item Formalism for causal reasoning.
+            \item Semantics and logic layers.
+        \item Expands classical logic.
+    \end{itemize}
+    \begin{itemize}
+    \item The causal calculus provides a general logical formalism for causal reasoning.
+        \item It operates on two layers: nonmonotonic semantics and the logic of causal rules.
+    \item His work builds upon previous research (Geffner 92, McCain and Turner 97, Lifschitz 97, Pearl), expanding on classical logic to accommodate causal reasoning.
+    \item Knowledge is represented through cause-effect relationships.
+    \item His framework uses classical propositional logic as a basis.
+    \item The language consists of a set of causal rules built on top of a set of propositions.
+    \item Syntactic provability (Th) is based on formal proof rules; semantic entailment ($\vDash$) on truth in all models.
+    \item  Propositions can be grouped as propositional atoms (\textit{p,g,r}) and classical propositions (\textit{A, B, C}).
+\end{itemize}
+}
+
+
+The foundation of his theory is causal calculus, which introduces causality as a distinct reasoning mechanism that extends classical logic.
+
+The \textbf{language} of causal calculus builds on classical propositional logic but introduces a distinct type of rule for expressing causal relationships. This language is based on a classical propositional language $L$, which is defined by a set of propositions as described in \cite[79]{bochman_logical_2021}.
+
+In standard propositional logic, we use common logical symbols:
+
+        \begin{itemize}
+            \item $\land, \lor, \neg, \to$: classical connectives and logical operations; $t, f$: truth constants (TRUE, FALSE)
+            \item \textit{p,g,r}: finite sets of propositions; \textit{A, B, C}: classical propositions
+            \item Th ($\vdash$): Syntactic \textit{provability}, a statement can be formally derived using proof rules.
+            \item $\vDash$: Semantic \textit{entailment}, means that a statement is true in all models.
+        \end{itemize}
+
+However, classical logic does not distinguish between \emph{logical implication} and \emph{causal relationships}, where one fact is actually responsible for another. This is where causal rules extend the common notation and expressability.
+
+ A central component of this formalism is the \textbf{causal theory}~$\Delta$, which consists of an arbitrary set of \emph{causal rules} with constraints on \emph{acceptance} of propositions. Therefore, these rules define how specific causes lead to their connected effects. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Causal Rules: Expressing Cause-and-Effect}
+
+\ignore{
+    \begin{itemize}
+        \item Causal relation: $a \Rightarrow B$.
+        \item Theory $\Delta$: set of rules.
+    \end{itemize}
+}
+
+A causal rule is introduced as a binary causal relation and inference rule, written as:
+
+\begin{equation}
+    a \Rightarrow A
+\end{equation}
+
+where:
+
+\begin{itemize}
+    \item $ a $ is a set of causes, i.e., a set of propositions.
+    \item $ A $ is the effect: what must be accepted if all causes in $ a $ hold as $ t $.
+\end{itemize}
+
+Unlike standard logic, causal rules enforce directionality. As a result, they indicate that $ A $ should be accepted because of $ a $, not simply that $ A $ is true.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%5
+\subsubsection{Example theory}
+
+One of the commonly utilized examples in causal reasoning, originally introduced by Judea Pearl \cite{pearl_embracing_1988}, is frequently applied in Bochman’s work. This example encapsulates the core principles of causal inference by illustrating how different causes lead to observable effects. The causal theory representing this scenario consists of three causal rules, and gets extended when required:
+
+\begin{equation}
+    \begin{aligned}
+        \text{Rain} \Rightarrow \text{WetGrass} \\
+        \text{Sprinkler} \Rightarrow \text{WetGrass} \\
+        \text{Rain} \Rightarrow \text{WetStreet}
+    \end{aligned}
+\end{equation}
+
+
+\subsection{Principles of Acceptance}
+
+This example leads us to the question about the formal acceptance of propositions in a causal theory. Bochman defines normative causal reasoning using key principles of basic rule of rational thinking. 
+%Principle~\ref{principle:causal_acceptance}
+
+\newtheorem{principle}{Principle}
+\begin{principle}[of Causal Acceptance]\label{principle:causal_acceptance}
+A proposition $B$ is \emph{accepted} in a causal theory $ \Delta $ \emph{iff} there exists a causal rule $a \Rightarrow B$  in $ \Delta $, where all conditions $A$ in $a$ are accepted
+\end{principle}
+
+This principle guarantees that no proposition is accepted without a valid causal justification. It requires for a fact to be accepted (believed to be true), it must come from a cause, i.e. something that explains why it is true.
+
+Furthermore, this principle defines how \textbf{models of causal theories} are constructed. Bochman describes a model as a set of accepted propositions that complies with this principle~\ref{principle:causal_acceptance}. Therefore, every proposition present in the model has either a valid causal rule supporting it or serves as a cause for another proposition. 
+
+\begin{principle}[of Preservation]\label{principle:preservation}
+If all propositions in $ a $ are accepted, and $ a $ causes $ B $, then $ B $ should also be accepted.
+\end{principle}
+
+This principle ensures that if we accept certain facts as true, then anything logically or causally following from them \emph{must} also be accepted, meaning that the acceptance is transmitted.
+
+\begin{principle}[of Sufficient Reason]\label{principle:sufficient_reason}
+Any proposition should have a valid cause for its acceptance. 
+\end{principle}
+
+This means that for any $ A $ to be accepted, there must exist at least one causal rule in $ \Delta $ leading to $ A $ based on previously accepted premises.
+
+% These principles ensure the consistency and reliability of causal reasoning. They prevent paradoxes, such as propositions being accepted without justification, and reinforce the idea that knowledge should be based on a structured causal explanation rather than arbitrary assumptions.
+
+
+With these principles, the framework allows us to accept the effects of an accepted cause,  as in classical deductive inference. However, the ability to reason in the opposite direction - from effect to cause - distinguishes causal reasoning from ordinary deduction. If \textit{WetGrass} is observed, then causal reasoning requires according to principle \ref{principle:sufficient_reason} that at least one of its known causes, i.e., either \textit{Rain} or \textit{Sprinkler}, must also be accepted. Similarly, if \textit{WetStreet} is observed, then the only possible cause, \textit{Rain}, must also be accepted (principle \ref{principle:sufficient_reason}), along with its collateral effect \textit{WetGrass} (principle \ref{principle:preservation}). 
+
+This \emph{bidirectional reasoning} allows us to derive  effects from causes while also inferring possible causes from observed effects. This property is a central aspect of Bochman’s causal formalism. It distinguishes causal inference from traditional deductive inference by ensuring that \emph{every accepted proposition is causally explained}. 
+
+Bochman emphasizes that causal rules must remain asymmetric. Unlike classical logic, the principle of reflexivity (where $ A \Rightarrow A $ trivially holds) is not valid in causal reasoning and therefore not included in a theory by default. Otherwise, every proposition would unjustifiably justify itself. 
+
+This distinction highlights a major difference between causal inference and deductive consequence. It can be explained with the idea of the defined exemplary model. While it is a logical consequence of \textit{Rain} that it rains (\glqq{}when it rains, it rains\grqq{}), \textit{Rain} itself is not a direct cause for \textit{Rain}. This is true for the defined model but also in reality. This shows that causal inference is fundamentally different from logical deduction.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Causal Theory and its Models}
+
+A \textbf{causal theory} is a set of causal rules that define how facts (propositions) cause other facts. A causal theory $ \Delta $ of the introduced example includes the rules $ \text{Rain} \Rightarrow \text{WetGrass}; \text{Sprinkler} \Rightarrow \text{WetGrass}; \text{Rain} \Rightarrow \text{WetStreet} $.
+
+A \textbf{model}\footnote{\emph{causal models} of a causal theory will be introduced in the following section} of this causal theory is a set of propositions that fulfill its causal rules. As a result, a given causal theory can have multiple possible models. The set of all valid models for a causal theory is called its \textbf{model space} or \textbf{set of causal worlds}.\footnote{In this framework, a \textbf{causal world} is a \glqq{}maximal classically consistent set of propositions\grqq{}\cite{bochman_causal_2024} that satisfies the given causal rules. This terminology aligns with Pearl’s concept of causal worlds, which correspond to classical causal models of the associated causal theory \cite{bochman_causal_2024}.}
+
+Based on this, the complete set of possible models for the given theory $ \Delta $ in the example is:
+
+\begin{description}
+    \item[$ M_1 = \emptyset $] This is the empty model, where nothing is accepted and not effects are caused.
+    
+    \item[$ M_2 = \{ \text{Rain}, \text{WetGrass}, \text{WetStreet} \} $] In this model, \textit{Rain} is accepted. By the given causal rules, this implies that both \textit{WetGrass} and \textit{WetStreet} must also be accepted.
+    
+    \item[$ M_3 = \{ \text{Sprinkler}, \text{WetGrass} \} $] This model assumes only \emph{Sprinkler} is true, leading to the natural consequence.
+    
+    \item[$ M_4 = \{ \text{Rain}, \text{Sprinkler}, \text{WetGrass}, \text{WetStreet} \} $] This model assumes that both \textit{Rain} and \textit{Sprinkler} are accepted.
+\end{description}
+
+However, the set $  M' = \{ \text{WetGrass}\} $ is not a valid model, because \textit{WetGrass} appears without an accepted cause, which violates the Principle of Causal Acceptance~\ref{principle:causal_acceptance}.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Rational Semantics: How Meaning is Assigned}
+
+\ignore{
+    \begin{itemize}
+    \item $\Delta(u)$: direct causal effects.
+        \item Fixed point: $v = \Delta(v)$.
+        \item Semantics: set of causal models.
+    \end{itemize}
+}
+
+In causal reasoning, we need a way to decide which propositions should be accepted based on a given causal theory $ \Delta $. \emph{Rational semantics} provides a system for interpreting causal rules formally. 
+
+The key idea is that a \textbf{causal model} determines whether a proposition is accepted in a logical way, i.e., it should only be accepted if there is a valid cause for it inside the model. Therefore, in Bochman’s framework, the semantic meaning of a causal theory is defined using causal models, which help to determine which propositions should be accepted.
+
+To mathematically describe the concept of acceptance, we use a function called a \textbf{valuation}. A valuation $ v $ is a function $  v: L \to \{0,1\} $ which assigns one of two values to each proposition:
+
+\begin{itemize}
+    \item $ v(A) = 1 $ \quad $\Rightarrow$ \quad The proposition $ A $ is accepted (taken to be true).
+    \item $ v(A) = 0 $ \quad $\Rightarrow$ \quad The proposition $ A $ is not accepted (but this does not mean it is false!).
+\end{itemize}
+
+It is crucial to note, that \textbf{not accepting $ A $ does not mean rejecting $ A $}. In Bochman’s system, rejection is explicitly captured by accepting $ \neg A $ (the negation of $ A $).
+
+As defined above, a \textbf{causal theory} $ \Delta $ consists of causal rules that describe how causes lead to effects. For any given set of accepted propositions $ u $, we can determine the propositions that must be accepted due to causal rules according to the principles of causal acceptance~\ref{principle:causal_acceptance}.
+
+\begin{equation}
+    \Delta(u) = \{ B \mid a \Rightarrow B \in \Delta, \, a \subseteq u \}
+\end{equation}
+
+This means that the monotonic operator $ \Delta(u) $ consists of all propositions $ B $ that must be accepted because they are directly caused by already accepted causes $ a $ in $ u $. Hence, it can be understood as a \emph{closure operator} in the context of causal reasoning.
+
+\newtheorem{definition}{Definition}
+\begin{definition}[Causal Model]\label{def:causal_model}
+A \textbf{causal model} of a causal theory $ \Delta $ is a valuation $ v $ that satisfies the following condition: $ v = \Delta(v) $
+\end{definition}
+
+
+Therefore, a causal model is defined as a \textbf{fixed point} of a causal theory. This means that if we keep applying $ \Delta $ to a set of accepted propositions, the set should eventually stabilize and not change as a direct consequence of definition~\ref{def:causal_model}. Every causal theory $ \Delta $ must have at least one causal model, meaning that it is always possible to construct a valid interpretation of a given theory.
+
+The smallest model possible is the \textbf{least model} $\Delta()$. Starting with an empty set $\varnothing$ and iteratively evaluating $ \Delta() $, the causal theory will for our example still result in an empty set (\glqq{}nothing causes nothing\grqq{}).
+
+\begin{definition}[Rational Semantics]\label{def:rational_semantics}
+The \textbf{rational semantics} of a causal theory is the set of all its causal models.
+\end{definition}
+
+With this definition, Bochman defines rational semantics in line with the previously introduced models and model space.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Causal Inference}
+
+\ignore{
+    \begin{itemize}
+        \item Derivations for semantics.
+        \item Monotonicity, Cut.
+        \item No reflexivity.
+    \end{itemize}
+    \begin{itemize}
+        \item Core rules:
+        \begin{itemize}
+            \item Monotonicity.
+            \item Cut.
+        \end{itemize}
+    \end{itemize}
+}
+
+Causal inference is the process of deriving new causal relationships based on an existing causal theory. It ensures that the conclusions drawn preserve the rational semantics and therefore remain logically valid within the framework.
+
+% Unlike traditional deductive reasoning, which follows strict logical rules, causal inference operates under different principles that allow it to capture the directionality and structure of causal relationships.
+
+To formalize causal inference, Bochman defines two fundamental inference rules that always preserve rational semantics:
+
+\begin{itemize}
+    \item \textbf{Monotonicity:} $\text{If } a \Rightarrow A \text{ and } a \subseteq b, \text{ then } b \Rightarrow A. $
+    \begin{itemize}
+        \item If a set of rules $a$ causes propositoin $A$ and $a$ is extended to a larger set $b$, the results still holds.
+    \end{itemize}
+    \item \textbf{Cut:} $\quad \text{If } a \Rightarrow A \text{ and } a, A \Rightarrow B, \text{ then } a \Rightarrow B$.
+    \begin{itemize}
+        \item If a set of rules $a$ causes proposition $A$ and the combined set of $a,A$ casuses $B$, it can be inferred that $a$ causes $B$ by combining these rules.
     \end{itemize}
 \end{itemize}
 
+\begin{tcolorbox}[colframe=black!40, colback=gray!10, title=\textbf{Example: Monotonicity and Cut Rule}]
+
+First, we extend our exemplary theory to include a new fact (e.g., we now consider both \textit{Rain} and \textit{ColdTemperature}), resulting in the extended rule $ \{ \text{Rain}, \text{ColdTemperature}  \} \Rightarrow \text{WetGrass}$. In all cases where \textit{Rain} is \textit{true}, also the new rule holds by applying \textbf{monotonicity}. Even though \textit{ColdTemperature} is not necessary for \textit{WetGrass}, the rule still remains valid when we add extra conditions.
+
+Second, we extend the exemplary theory with the rule $ \{ \text{Rain}, \text{WetStreet} \} \Rightarrow \text{SlipperyGround} $. Using the \textbf{Cut Rule}, we can derive $ \{ \text{Rain} \} \Rightarrow \text{SlipperyGround} $. This means that we can reach the same conclusion without explicitly mentioning the intermediate step (\textit{WetStreet}). Essentially, the Cut Rule allows us to streamline causal reasoning by eliminating intermediate causal steps when they are logically justified.
+\end{tcolorbox}
+
+A key difference between \textbf{causal inference} and \textbf{classical deduction} is that, in Bochman’s system, the following rule does not hold by default: \textbf{Reflexivity:} $ A \Rightarrow A $
+
+This means that, unlike in ordinary logic, we do not assume that a proposition justifies itself as its own cause. In classical logic, if we assume that a proposition $ A $ is true, then it is automatically considered provable. This is because classical logic is based on \textbf{deductive reasoning}, where validity depends on logical consistency rather than explanations of \textit{why} something is true.
+
+On the other side, in \textbf{causal reasoning}, we focus on \textbf{cause-and-effect relationships}. This means that for a statement $ A $ to be accepted, there must be an actual \textbf{cause} explaining why $ A $ holds. We do not assume that $ A $ justifies itself unless it is explicitly stated as a self-evident assumption in the causal theory.
+
+If a causal theory does include a rule of the form $ A \Rightarrow A $, it is regarded as a \textbf{self-evident proposition}, which means that it does not require any further justification for its acceptance. Such propositions are called \textbf{causal assumptions} and are special cases where we deliberately assume that a statement is always valid without needing an external cause.
+
+To describe \emph{all} the causal relationships that can be derived from a causal theory $ \Delta $, rather than just individual rules, the following closure operator, called the \textbf{least causal inference relation} is defined: $ a \Rightarrow_{\Delta} B$
+
+This means that, under the causal theory $ \Delta $, the set of causes $ a $ logically leads to $ B $. Naturally, the definition of $ \Rightarrow_{\Delta} $ is not limited to a single causal rule. Instead, it represents \emph{all possible causal relationships} that can be concluded from the given theory $ \Delta $.
+
+Bochman explains, that any causal theory $ \Delta $ is \textbf{semantically equivalent} to $ \Rightarrow_{\Delta} $. This means that everything we can logically infer within $ \Delta $ can be completely captured and is fully described by $ \Rightarrow_{\Delta} $. Summarizing, thhis closure operator can read like a summary of all causal rules that the theory allows, rather than just one rule at a time. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Causal Operator \texorpdfstring{$\mathcal{C}$}{C}}
-\begin{itemize}
-    \item \(\mathcal{C}(u)\): props. caused by \(u\)
-    \item Similar to derivability Th
-    \item Monotonicity, transitivity
-\end{itemize}
 
-\subsubsection{Non-inclusivity of \texorpdfstring{$\mathcal{C}$}{C}}
-\begin{itemize}
-    \item \(u\) not part of \(\mathcal{C}(u)\)
-    \item Differs from Th
-    \item Rain causes wet street not itself
-\end{itemize}
+\ignore{
+    \begin{itemize}
+        \item $\mathcal{C}(u)$: props. caused by $u$.
+        \item Similar to derivability Th.
+        \item Monotonicity, transitivity.
+    \end{itemize}
+}
 
-\subsubsection{Non-idempotence of \texorpdfstring{$\mathcal{C}$}{C}}
-\begin{itemize}
-    \item  \(\mathcal{C}(\mathcal{C}(u)) \neq \mathcal{C}(u)\)
-    \item Causation propagates
-   \item Rain example shows cascading effects
-\end{itemize}
+Next, want to denote all the effects, i.e. causal consequences, that follow from a given set of causes, i.e. propositions, with a single \textbf{causal operator} $ \mathcal{C} $.
 
-\subsection{Causal Theories and Expanded Notions}
-\begin{itemize}
-    \item Theories: sets of rules
-    \item Least production relation
-    \item Systematical derivation for effects
-\end{itemize}
+\begin{definition}[Causal Operator]
+For a set of propositions $ u $, the causal operator $ \mathcal{C}(u) $ produces the set of all propositions $ A $ that are caused by $ u $:
 
-\subsection{Causal Inference \texorpdfstring{(\( \Rightarrow \))}{} vs. Deductive Consequence \texorpdfstring{(\( \vdash_\Rightarrow \))}{}}
-\begin{itemize}
-    \item  \(\Rightarrow\): cause-effect
-    \item \(\vdash_\Rightarrow\): propositional theory
-    \item \(\Rightarrow\) retains causal info
-\end{itemize}
+\begin{equation}
+    \mathcal{C}(u) = \{ A \mid u \Rightarrow A \}
+\end{equation}
+\end{definition}
 
-\subsection{Equivalence}
-\begin{itemize}
-    \item Logical equivalence via causal inference
-    \item Semantics don't determine theory
-     \item Strong semantic equivalence
-\end{itemize}
+This means that if $ A $ is in $ \mathcal{C}(u) $, then there is a causal rule linking $ u $ to $ A $, making $ A $ a causal consequence of $ u $.
 
-\subsection{Axioms vs. Assumptions}
-\begin{itemize}
-     \item Axiom: \(\emptyset \Rightarrow A\)
-    \item Assumption: \(A \Rightarrow A\)
-    \item Assumptions create models
-\end{itemize}
 
-\subsection{Supraclassical Causal Reasoning}
-\begin{itemize}
-    \item Integrates classical logic
-    \item Causal extension
-    \item Falsity rule(s)
-\end{itemize}
+\begin{tcolorbox}[colframe=black!40, colback=gray!10, title=\textbf{Example: $ u = \{\text{Rain}\} $}]
 
+Starting with the causal rule from the example theory $ \text{Rain} \Rightarrow \text{WetStreet} $, the causal operator $ \mathcal{C}(u) $ must include \textit{WetStreet}: $\mathcal{C}(\{\text{Rain}\}) = \{\text{WetStreet}\} $.
+
+If we add the following rule to the theory $ \text{WetStreet} \Rightarrow \text{SlipperyStreet} $
+then the set of consequences grows in a way, that the causal operator returns all effects that follow from the initial cause $ \mathcal{C}(\{\text{Rain}\}) = \{\text{WetStreet}, \text{SlipperyStreet}\} $
+
+\end{tcolorbox}
+
+Bochman descries the causal operator $\mathcal{C}$ to be similar to the \glqq{}usual derivability operator for consequence relations\grqq{} $\vdash$ (with the associated closure $Th$). As a consequence, he defines its properties as follows.
+
+\begin{description}
+    \item[Monotonicity] Adding more/additional causes to a set can never lead to a reduction of the set of causal consequences. $\mathcal{C}(\cdot)$ only stays the same or grows, defined as $ u \subseteq v \Rightarrow \mathcal{C}(u) \subseteq \mathcal{C}(v) $
+    \begin{description}
+        \item[Example (continued)] Adding the fact that the sprinkler was on to the previous example, leads to the inclusion of additional consequences, but never to the removal of any. That means that $u' = \{\text{Rain}, \text{Sprinkler}\} $ results in $  \mathcal{C}(\{\text{u}\}) \subseteq \mathcal{C}(\{\text{u'}\}) \Rightarrow \mathcal{C}(\{\text{Rain}\}) \subseteq \mathcal{C}(\{\text{Rain}, \text{Sprinkler}\})$
+    \end{description}
+    \item[Deductive Closure] The set of causal consequences is logically complete, called a \emph{deductively closed set}, defined as $\mathcal{C}(u) = Th(\mathcal{C}(u))$. 
+    \begin{description}
+        \item[Example] \textit{Rain} causes \textit{WetStreet}, and we logically know that a wet street means it is \textit{not dry}, the deductive closed set is defined as: $\mathcal{C}(\{\text{Rain}\}) = \{\text{WetStreet}, \neg \text{DryStreet}\} $
+    \end{description}
+    \item[Transitivity] If one fact causes another, and that second fact causes a third, then the first fact should also be considered a cause of the third: $A \Rightarrow B, \quad B \Rightarrow C \quad \Rightarrow \quad A \Rightarrow C$
+    \begin{description}
+        \item[Example] If \textit{Rain} causes \textit{WetStreet}, and \textit{WetStreet} causes \textit{SlipperyStreet}, then \textit{Rain} should also be considered a cause of \textit{SlipperyStreet}: $\text{Rain} \Rightarrow \text{WetStreet}, \quad \text{WetStreet} \Rightarrow \text{SlipperyStreet}$, leads to $ \text{Rain} \Rightarrow \text{SlipperyStreet}$
+    \end{description}  
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+    \item[Non-inclusivity] The original set of propositions $ u $ is not necessarily part of its own causal consequence set $ \mathcal{C}(u) $, expressed as $ u \nsubseteq \mathcal{C}(u) $
+    \begin{description}  
+        \item[Explanation] The set of propositions caused by $ u $ (i.e., $ \mathcal{C}(u) $) does not always contain $ u $ itself. As a result, just because a proposition is in $ u $, it does not mean it must appear in the set of consequences caused by $ u $. This is closely related to the \emph{absence of reflexivity} in causal reasoning. Unlike classical logic, where any statement can imply itself, causal reasoning does not automatically assume that something causes itself. This propertiy distiguishes causal reasoning from classical logic, where the derivability operator $ Th $ always includes the original set (i.e., $ u \subseteq Th(u) $
+        \item[Example: $ \mathcal{C}(\text{Rain}) $]  
+        A specific raining event ($ u $) may have causal consequences, such as a wet street (i.e., $ \mathcal{C}(u) = \{ WetStreet \}$), but this does not necessarily mean that the raining event causes itself. (However, it might cause other raining events ($ u' $) indirectly.)
+    \end{description}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \item[Non-idempotence] The causal operator is not \textbf{idempotent}, meaning applying it multiple times can lead to different results: $ \mathcal{C}(\mathcal{C}(u)) \neq \mathcal{C}(u) $
+    \begin{description}
+        \item[Explanation]  
+        A set of propositions that are caused by $ u $ (i.e., $ \mathcal{C}(u) $) may itself cause new propositions, \glqq{}forming a sequence of cascading effects\grqq{}\cite{bochman_logical_2021}. This reflects the step-by-step nature of causation, where consequences of one event can in turn trigger further effects. Contrast with logical derivation: In classical logic, applying the derivability operator multiple times does not change the set of derived propositions (i.e., $ Th(Th(u)) = Th(u) $), but in causal reasoning, applying $ \mathcal{C} $ repeatedly expands the set of causal effects.  
+        \item[Example: $ u = \{\text{Rain}\} $]  
+        Consider a scenario where rain leads to multiple \textit{cascading} layers of causal consequences:  
+        \begin{description}
+            \item[Step 1: Direct causal effects of $ u $] $\mathcal{C}(u) = \{\text{WetStreet}\} $, where $\mathcal{C}(u)$ also includes direct logical consequences via deductive closure:  $ Th(\mathcal{C}(u)) = \{\text{SlipperyStreet}\} $        
+            \item[Step 2: Effects of $ \mathcal{C}(u) $]  
+            Now, the slippery street itself becomes a new cause, triggering further effects:  
+            $
+            \mathcal{C}(\mathcal{C}(u)) = \{\text{People Slip on the Street}, \text{Traffic Slows Down}\}
+            $
+            
+            \item[Step 3: Effects of $ \mathcal{C}(\mathcal{C}(u)) $]  
+            The previous effects now lead to another layer of consequences:  
+            $
+            \mathcal{C}(\mathcal{C}(\mathcal{C}(u))) = \{\text{People Get Hurt}, \text{Clothes Get Wet}\}
+            $
+        \end{description}
+    \end{description}
+\end{description}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Axioms, Assumptions, Default, and Nonmonotonicity}
+
+\ignore{
+    \begin{itemize}
+         \item Axiom: $\emptyset \Rightarrow A$.
+        \item Assumption: $A \Rightarrow A$.
+        \item Assumptions create models.
+    \end{itemize}
+}
+Causal reasoning is based on the idea that every accepted proposition must have a reason for being accepted. This idea follows Leibniz’s Principle of Sufficient Reason, which states that nothing happens without a cause.
+
+However, if every cause needs another cause, we face a problem known as Agrippa’s Trilemma: If every proposition needs a cause, we would never stop asking for justifications (infinite regress). To avoid this, we accept some propositions without a cause (axioms) or propositions that justify themselves (causal assumptions).
+
+Bochman defines two types of (self-) justified propositions in causal theories:
+
+\begin{description}
+    \item[Axioms] Propositions that are accepted without a cause in the theory: $\emptyset \Rightarrow A$ 
+    \item[Causal Assumptions] Propositions that justify themselves: $  A \Rightarrow A $ \\
+    This means that if $A$ is in the causal system, it remains accepted without needing an external \glqq{}a-priori\grqq{} justification.
+\end{description}
+
+These concepts are related to \textbf{nonmonotonicity} of causal theories and \textbf{defaults} in causal assumptions, meaning that new information can change conclusions. Default logic introduces a distinction between a \emph{fact} which is always accepted as if it is true, and a \emph{default} rule, which is accepted unless there is a reason to reject it. 
+
+In Bochman’s model, defaults are interpreted as \textit{special kind} of causal assumptions. A default is an assumption that is accepted unless we have evidence against it. This means that it is accepted whenever it is not rejected according to the \textbf{default acceptance principle} and described as an \glqq{}anti-Leibniz principle\grqq{}\cite{bochman_causal_2024}, meaning assumptions hold until a contradiction appears.
+
+This leads to \textbf{Default Bivalence}, where for any default $A$, either $A \quad \text{or} \quad \neg A$ must be accepted. This differs from classical logic, where we assume truth values for all propositions without relying on external causes.
+
+Building on this foundation, Bochman further develops \textbf{Default Causal Theories}, which are explored in more detail in \cite{bochman_causal_2004}. In addition to grounding his work in broader philosophical theories, he also connects it back to the (initially refrenced) pioneering contributions of Pearl \cite{pearl_embracing_1988}, Geffner \cite{geffner_causal_1990}, and Lifschitz \cite{lifschitz_logic_1997}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Further Properties of Causal Reasoning}
-\begin{itemize}
-     \item Defaults: special assumptions
-    \item New truths can invalidate results
-    \item Negation as default
-\end{itemize}
 
+\ignore{
+    \begin{itemize}
+         \item Defaults: special assumptions.
+        \item New truths can invalidate results.
+        \item Negation as default.
+    \end{itemize}
+}
+
+While this seminar thesis has covered many aspects of Bochman's theory of causal reasoning, several important topics from his 2024 work \cite{bochman_causal_2024} were not fully explored due to space constraints. These include:
+
+\begin{description}
+    \item [Structural Equation Models]: Bochman provides a detailed account of how his causal calculus relates to Pearl's structural equation models. He demonstrates that Pearl's approach can be viewed as a special case of his more general causal theory, showing how structural equations can be translated into causal rules while preserving their semantic properties.
+    
+    \item [Counterfactual Reasoning]: The 2024 paper explores how causal theories handle counterfactual queries and their relation to intervention-equivalence. This includes the formalization of \glqq{}what-if\grqq{} scenarios.
+    
+    \item [Classical Causal Inference]: Bochman develops a specific variant of causal inference restricted to classical worlds, which provides a bridge between his approach and more traditional \glqq{}Tarski-\grqq{} logical frameworks.
+    
+    \item [Default Negation]: is relevant for connecting causal reasoning with logic programming.
+    
+    \item [Negative Causal Completion]: Bochman introduces a procedure for systematically generating negative causal rules from positive ones, which helps formalize how absence of causes leads to absence of effects.
+    
+    \item [Applications of Causal Reasoning]: Bochman provides examples of how his work can be applied, ranging from explainable AI to legal theory.
+    
+    \item [Historical Foundations]: Especially in \cite{bochman_logical_2021}, Bochman connects his theory to historical and philosophical discussuions of causality, from Aristotle's theory, to Leibniz, Hume, and Pearl.
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Closing remarks}
-\subsection{Applications of Causal Reasoning}
-\begin{itemize}
-    \item Explainable AI
-    \item Legal theory
-\end{itemize}
 
-\subsection{Take away messages}
-\begin{itemize}
-    \item Basis for integrating Pearl
-    \item Asymmetry between language/semantics
-    \item Holistic view of propositions
-\end{itemize}
+Bochman's framework aims to restore causation to \glqq{}its proper and deserved place in the general picture of human reasoning\grqq{}\cite{bochman_causal_2024}, suggesting that causal reasoning should be understood as a fundamental mode of thought rather than a special case of logical inference. Reasoning with and understanding cause and effect is a basic way humans think, not just a special type of formal logic. 
+
+This seminar thesis introduces the basic ideas of Alexander Bochman about causation. Bochman created a special system called \textbf{causal calculus}, which helps us understand and study relationships between causes and effects. What makes his work special is that it connects different areas - from philosophical ideas to modern formal logics and reasoning systems. While only a few researchers currently use Bochman's methods, his ideas have the potential to help us better understand cause-and-effect relationships in many different fields of study.
+
+
+\ignore{
+    \begin{itemize}
+        \item Basis for integrating Pearl.
+        \item Asymmetry between language/semantics.
+        \item Holistic view of propositions.
+    \end{itemize}
+}
 
 
 
 % References
+\newpage
 %\addreferences
 {\footnotesize
     \printbibliography
