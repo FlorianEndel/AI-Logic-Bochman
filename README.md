@@ -15,7 +15,7 @@ The work explores Bochman's approach to causal reasoning, which provides a forma
 - Offers a novel perspective on causality through an inferentialist lens
 
 ## Contents
-- Seminar Paper
+- [Seminar Paper](Paper/AIG_seminar.pdf)
 - [Presentation Slides](Presentation/2024-12-10%20Seminar%20AI%20-%20Causal%20Reasoning%20by%20Alexander%20Bochman%20-%20Florian%20Endel.pdf)
 - LaTeX Source Files
 
